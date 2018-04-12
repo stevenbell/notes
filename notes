@@ -258,6 +258,9 @@ main() {
         "open"|"o" )
             cmd="handle_multiple_notes open"
             ;;
+        "edit"|"e" )
+            cmd="handle_multiple_notes open"
+            ;;
         "rm" )
             cmd="remove_note"
             ;;
