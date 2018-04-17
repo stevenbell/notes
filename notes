@@ -112,6 +112,15 @@ new_note() {
     open_note "$note_name.$NOTES_EXT"
 }
 
+recent_notes() {
+    if [ "$#" -gt 0 ]; then
+      count="$*"
+    else
+      count=1
+    fi
+    find $NOTES_DIRECTORY -type f -printf '%T@ %P\n' | sort -n -r | awk '{print $2}' | head -n $count
+}
+
 remove_note() {
     local rm_args=()
     if [[ "$1" == "-r" || "$1" == "--recursive" ]]; then
@@ -205,6 +214,7 @@ Usage:
     notes find|f [pattern]                # Search notes by filename and path
     notes grep|g <pattern>                # Search notes by content
     notes search|s [pattern]              # Search notes by filename or content
+    notes recent|r [count]                # Print recently-edited notes
     notes open|o                          # Open your notes directory
     notes open|o <name>                   # Open a note for editing by full name
     notes rm [-r | --recursive] <name>    # Remove note, or folder if -r or --recursive is given
@@ -245,6 +255,9 @@ main() {
             ;;
         "grep"|"g" )
             cmd="grep_notes"
+            ;;
+        "recent"|"r" )
+            cmd="recent_notes"
             ;;
         "open"|"o" )
             cmd="handle_multiple_notes open"
