@@ -118,7 +118,7 @@ recent_notes() {
     else
       count=1
     fi
-    find $NOTES_DIRECTORY -type f -printf '%T@ %P\n' | sort -n -r | awk '{print $2}' | head -n $count
+    find $NOTES_DIRECTORY -type f -name "*.$NOTES_EXT" -printf '%T@ %P\n' | sort -n -r | awk '{print $2}' | head -n $count
 }
 
 remove_note() {
